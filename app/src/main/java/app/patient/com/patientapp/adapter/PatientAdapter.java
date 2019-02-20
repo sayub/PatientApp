@@ -36,7 +36,6 @@ public class PatientAdapter extends
 
         @Override
         public void onClick(View view) {
-            Log.v("PATIENTS", "onClick " + getPosition());
             String details = "Family Name: ";
 
             List<Name> name = mEntries.get(getPosition()).getResource().getName();

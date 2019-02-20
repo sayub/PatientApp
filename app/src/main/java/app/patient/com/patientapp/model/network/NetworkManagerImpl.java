@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkManagerImpl implements NetworkManager {
     public void loadPatientsData(final Consumer<List<Entry>> onPatientsDataLoaded, final Consumer<Throwable> onPatientsDataLoadFailed) {
+        // Setting up retrofit.
         Retrofit retrofit = new Retrofit
                 .Builder()
                 .baseUrl(Api.BASE_URL)
@@ -25,6 +26,7 @@ public class NetworkManagerImpl implements NetworkManager {
                 Root patientEntries = response.body();
                 List<Entry> entry = patientEntries.getEntries();
                 try {
+                    // Using RxJava for function callback.
                     onPatientsDataLoaded.accept(entry);
                 } catch (Exception e) {
                     e.printStackTrace();

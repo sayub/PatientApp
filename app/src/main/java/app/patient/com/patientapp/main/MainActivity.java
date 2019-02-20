@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -18,7 +15,6 @@ import app.patient.com.patientapp.R;
 import app.patient.com.patientapp.adapter.PatientAdapter;
 import app.patient.com.patientapp.dependency.DependencyRegistry;
 import app.patient.com.patientapp.model.dto.Entry;
-import app.patient.com.patientapp.model.dto.Name;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOAD_SUCCESS_MESSAGE = "Patients data loaded successfully.";
@@ -35,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
         mPatientsRecyclerView.setHasFixedSize(true);
         mPatientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Injecting dependencies.
         DependencyRegistry.getInstance().inject(this);
 
+        // Passing the two methods as arguments.
         mPresenter.loadPatientsData(this::onPatientsDataLoaded, this::onPatientsDataLoadFailed);
     }
 
@@ -45,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    // Callback method.
     private void onPatientsDataLoaded(List<Entry> entries) {
+        // Entries are sorted by last update date.
         Collections.sort(entries, new Comparator<Entry>() {
             @Override
             public int compare(Entry lhs, Entry rhs) {
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, LOAD_SUCCESS_MESSAGE, Toast.LENGTH_SHORT).show();
     }
 
+    // Callback method.
     private void onPatientsDataLoadFailed(Throwable t) {
         Toast.makeText(this, LOAD_FAILURE_MESSAGE + " (" + t.getMessage() + ")", Toast.LENGTH_SHORT).show();
     }

@@ -11,6 +11,7 @@ import app.patient.com.patientapp.model.network.NetworkManagerImpl;
 public class DependencyRegistry {
     private static DependencyRegistry sInstance = new DependencyRegistry();
 
+    // Private constructor.
     private DependencyRegistry() {}
 
     public static DependencyRegistry getInstance() {
@@ -25,6 +26,7 @@ public class DependencyRegistry {
         return new NetworkManagerImpl();
     }
 
+    // Injection method for the MainActivity.
     public void inject(MainActivity mainActivity) {
         MainPresenter presenter = new MainPresenterImpl(createModelManager());
         mainActivity.configureWith(presenter);
